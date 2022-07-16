@@ -1,10 +1,41 @@
+
 .App {
   text-align: center;
+  background-color: rgb(19, 19, 40);
+}
+h1{
+  color: white;
+}
+.bestScore{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+p{
+
+  color: white;
+  
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+h3{
+  color: green;
+}
+
+.span{
+  background-color: aliceblue;
+}
+.center {
+  background-color: white;
+  border-radius: 2%;
+  margin: auto;
+  width: 50%;
+  height: 100px;
+  border: 3px solid green;
+  padding: 10px;
 }
 
 @media (prefers-reduced-motion: no-preference) {

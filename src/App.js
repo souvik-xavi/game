@@ -1,23 +1,100 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import React, { useState, useEffect } from "react";
 
 function App() {
+  const [start, setStart] = useState(false);
+  const [alphabet, setAlphabet] = useState("");
+  const [value, setValue] = useState("");
+  const [time, setTime] = useState(0);
+  const [running, setRunning] = useState(false);
+  const [best, setBest] = useState(Number.MAX_VALUE);
+
+  useEffect(() => {
+    let interval;
+    if (running) {
+      interval = setInterval(() => {
+        setTime((prevTime) => prevTime + 10);
+      }, 10);
+    } else if (!running) {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [running]);
+
+  var [count, setCount] = useState(0);
+  const reset = () => {
+    setStart(false);
+    setCount(0);
+    setAlphabet("");
+    setRunning(false);
+    setTime(0);
+  };
+  const toggle = () => {
+    AlphabetGenerator();
+    setStart(true);
+    setRunning(true);
+  };
+  const AlphabetGenerator = () => {
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const randomCharacter =
+      alphabet[Math.floor(Math.random() * alphabet.length)];
+    setAlphabet(randomCharacter);
+  };
+  const change = (event) => {
+    if (count < 20) {
+      if (alphabet != event.target.value) {
+        setTime(parseInt(time) + parseInt(500));
+      }
+      count = setCount(count + 1);
+      AlphabetGenerator();
+    } else {
+      setRunning(false);
+      if (time < best) {
+        setBest(time);
+        setAlphabet("Winner");
+      } else {
+        setAlphabet("Failure");
+      }
+    }
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+      <h1>Type the Alphabet</h1>
+      <p>Typing game to see how fast you type. Timer Starts when yo do :)</p>
+      <div className="center ">
+        {!start ? (
+          <button onClick={() => toggle()}>Start</button>
+        ) : (
+          <h3>{alphabet}</h3>
+        )}
+      </div>
+      <input
+        type="text"
+        onChange={change}
+        value={value}
+        style={{ backgroudColor: "white" }}
+      ></input>
+      <button onClick={reset}>Reset</button>
+      <div className="numbers">
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          {("0" + Math.floor((time / 60000) % 60)).slice(-2)}:
+          {("0" + Math.floor((time / 1000) % 60)).slice(-2)}:
+          {("0" + ((time / 10) % 100)).slice(-2)}
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      </div>
+      <div className="bestScore">
+        <p>My best time is :</p>{" "}
+        {best === Number.MAX_VALUE ? (
+          <p> First Game</p>
+        ) : (
+          <p>
+            {("0" + Math.floor((best / 60000) % 60)).slice(-2)}:
+            {("0" + Math.floor((best / 1000) % 60)).slice(-2)}:
+            {("0" + ((best / 10) % 100)).slice(-2)}
+          </p>
+        )}
+      </div>
     </div>
   );
 }
