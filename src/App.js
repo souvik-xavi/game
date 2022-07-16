@@ -78,18 +78,18 @@ function App() {
       ></input>
       <button onClick={reset}>Reset</button>
       <div className="numbers">
-        <p>
+        <p>Time: 
           {("0" + Math.floor((time / 60000) % 60)).slice(-2)}:
           {("0" + Math.floor((time / 1000) % 60)).slice(-2)}:
           {("0" + ((time / 10) % 100)).slice(-2)}
         </p>
       </div>
       <div className="bestScore">
-        <p>My best time is :</p>{" "}
         {best === Number.MAX_VALUE ? (
           <p> First Game</p>
         ) : (
           <p>
+            My best time is :
             {("0" + Math.floor((best / 60000) % 60)).slice(-2)}:
             {("0" + Math.floor((best / 1000) % 60)).slice(-2)}:
             {("0" + ((best / 10) % 100)).slice(-2)}
