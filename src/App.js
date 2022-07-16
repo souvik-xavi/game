@@ -42,6 +42,7 @@ function App() {
     setAlphabet(randomCharacter);
   };
   const change = (event) => {
+    setValue(event.target.value);
     if (count < 20) {
       if (alphabet != event.target.value) {
         setTime(parseInt(time) + parseInt(500));
