@@ -29,6 +29,7 @@ function App() {
     setAlphabet("");
     setRunning(false);
     setTime(0);
+    setValue("")
   };
   const toggle = () => {
     AlphabetGenerator();
@@ -42,6 +43,7 @@ function App() {
     setAlphabet(randomCharacter);
   };
   const change = (event) => {
+    if(start){
     setValue(event.target.value);
     if (count < 20) {
       if (alphabet != event.target.value) {
@@ -49,15 +51,19 @@ function App() {
       }
       count = setCount(count + 1);
       AlphabetGenerator();
-    } else {
+    } else  if(count===20){
+      console.log(count);
+      count = setCount(count + 1);
       setRunning(false);
       if (time < best) {
-        setBest(time);
         setAlphabet("Winner");
+        localStorage.setItem('bestItem',time);
       } else {
         setAlphabet("Failure");
       }
+      setBest(time);
     }
+  }
   };
   return (
     <div className="App">
